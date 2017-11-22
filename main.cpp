@@ -1,7 +1,7 @@
 #include <iostream>
 
 using namespace std;
-/***********************0/1 knapack problem using dynamic programming*///////////////////
+/***********************0/1 knapack problem using dynamic programming
 int knapsackProblem(int *arrweight,int *arrval,int n,int totalwieght,int** result)
 {
     if(n==0||totalwieght==0)
@@ -22,9 +22,26 @@ int knapsackProblem(int *arrweight,int *arrval,int n,int totalwieght,int** resul
         }
         }
 }
-
-int main()
+*///////////////////
+int matrixChainMultiplication(int* arr,int start,int last)
 {
+    int res=0,mini;
+    if(start==last)
+        return 0;
+    else
+    {
+        int mini=INT_MAX;
+        for(int i=start;i<last;i++)
+        {
+            res=matrixChainMultiplication(arr,start,i)+matrixChainMultiplication(arr,i+1,last)+arr[start]*arr[last+1]*arr[i+1];
+            if(res<mini)
+                mini=res;
+        }
+        return res;
+    }
+}
+int main()
+{   /***********knapsack code
     int *arrval,*arrweight,totalweight,n,**result;
     cout<<"enter number of weights and total weight"<<endl;
     cin>>n>>totalweight;
@@ -41,6 +58,12 @@ int main()
     delete[] arrweight;
     for(int i=0;i<=n;i++)
         delete[] result[i];
-    delete[] result;
+    delete[] result;*/
+    int *arr,n;
+    cin>>n;
+    arr=new int[n+1];
+    for(int i=0;i<n;i++)
+        cin>>arr[i];
+    cout<<matrixChainMultiplication(arr,0,n-1);
     return 0;
 }
