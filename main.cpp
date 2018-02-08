@@ -1,7 +1,7 @@
 #include <iostream>
 #include<string>
 using namespace std;
-/***************Lcs*/////////////////////////////
+/***************Lcs
 int Lcs(string s,string p)
 {
     int n=s.size();
@@ -22,10 +22,25 @@ int Lcs(string s,string p)
     }
     return arr[n][m];
 }
+*/////////////////////////////
+int maxContinousSum(int *array,int n)
+{
+    int max_sum=array[0],max_ending_sum=array[0];
+    for(int i=1;i<n;i++)
+    {
+        max_ending_sum=max(array[i],max_ending_sum+array[i]);
+        max_sum=max(max_sum,max_ending_sum);
+    }
+    return max_sum;
+}
 int main()
 {
-    string s,p;
-    cin>>s>>p;
-    cout<<Lcs(s,p);
+    int n;
+    int *array=new int[n];
+    cin>>n;
+    for(int i=0;i<n;i++)
+        cin>>array[i];
+    cout<<maxContinousSum(array,n);
+    delete[] array;
     return 0;
 }
