@@ -23,6 +23,7 @@ int Lcs(string s,string p)
     return arr[n][m];
 }
 */////////////////////////////
+/***************code to find maximum sum of contigous elements
 int maxContinousSum(int *array,int n)
 {
     int max_sum=array[0],max_ending_sum=array[0];
@@ -32,15 +33,31 @@ int maxContinousSum(int *array,int n)
         max_sum=max(max_sum,max_ending_sum);
     }
     return max_sum;
+}*////////
+/********maximum sum of non contigous elements in array*/////////
+int maxNonContigous(int *array,int n)
+{
+    int incSum=array[0],excSum=0,prev;
+    for(int i=1;i<n;i++)
+    {
+        prev=incSum;
+        incSum=excSum+array[i];
+        excSum=max(excSum,prev);
+    }
+    return max(incSum,excSum);
 }
 int main()
 {
-    int n;
-    int *array=new int[n];
-    cin>>n;
-    for(int i=0;i<n;i++)
+    int n,t;
+    cin>>t;
+    while(t--)
+    {
+        cin>>n;
+        int *array=new int[n];
+        for(int i=0;i<n;i++)
         cin>>array[i];
-    cout<<maxContinousSum(array,n);
-    delete[] array;
+        cout<<maxNonContigous(array,n)<<endl;
+        delete[] array;
+    }
     return 0;
 }
