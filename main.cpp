@@ -35,6 +35,7 @@ int maxContinousSum(int *array,int n)
     return max_sum;
 }*////////
 /********maximum sum of non contigous elements in array*/////////
+/****************************************************************
 int maxNonContigous(int *array,int n)
 {
     int incSum=array[0],excSum=0,prev;
@@ -60,4 +61,42 @@ int main()
         delete[] array;
     }
     return 0;
+}*//////////////
+int catalanNumber(int n,long long * &array)
+{
+    if(n==1||n==0)
+        return 1;
+    else
+    {
+       long long res=0,left,right;
+        for(int i=1;i<=n;i++)
+        {
+            if(!array[i-1])
+               {
+                   left=catalanNumber(i-1,array);
+                   array[i-1]=left;
+               }
+            else
+                left=array[i-1];
+            if(!array[n-i])
+                {
+                    right=catalanNumber(n-i,array);
+                    array[n-i]=right;
+                }
+            else
+                right=array[n-i];
+            res+=left*right;
+        }
+        return res;
+    }
+}
+int main() {
+    long long t=1,n,*array;
+    while(t)
+    {
+        cin>>t>>n;
+        array=new long long[n]();
+        cout<<catalanNumber(n,array)<<endl;
+        delete[] array;
+    }
 }
