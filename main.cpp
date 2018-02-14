@@ -62,6 +62,7 @@ int main()
     }
     return 0;
 }*//////////////
+/**************
 int catalanNumber(int n,long long * &array)
 {
     if(n==1||n==0)
@@ -89,14 +90,47 @@ int catalanNumber(int n,long long * &array)
         }
         return res;
     }
+}*///////////
+/***********catalns numbers code*////////
+int catalansNumbers(long long n)
+{
+    long long *array=new long long[n+1];
+    array[1]=1;
+    array[0]=1;
+    for(long long i=1;i<=n;i++)
+    {
+        array[i]=array[i-1]*array[n-i];
+        cout<<array[i]<<endl;
+    }
+    long long res=array[n];
+    delete[] array;
+    return res;
+}
+/******************matrix chain multiplication code*/////////
+int matrixChainMultiplication(int *array,int start,int last)
+{
+    if(start==last)
+        return 0;
+    else
+    {
+        int res=INT_MAX,temp;
+        for(int i=start;i<last;i++)
+        {
+            temp=matrixChainMultiplication(array,start,i)+
+                 matrixChainMultiplication(array,i+1,last)+
+                 array[start-1]*array[i]*array[last];
+            if(temp<res)
+                res=temp;
+        }
+        return res;
+    }
 }
 int main() {
-    long long t=1,n,*array;
-    while(t)
-    {
-        cin>>t>>n;
-        array=new long long[n]();
-        cout<<catalanNumber(n,array)<<endl;
-        delete[] array;
-    }
+    int *array,n;
+    cin>>n;
+    array=new int[n];
+    for(int i=0;i<n;i++)
+        cin>>array[i];
+    cout<<matrixChainMultiplication(array,1,n-1);
+    delete[] array;
 }
