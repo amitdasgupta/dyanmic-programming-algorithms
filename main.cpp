@@ -125,12 +125,34 @@ int matrixChainMultiplication(int *array,int start,int last)
         return res;
     }
 }
+int matrixChainMultiplicationDp(int *array,int n)
+{
+    int arr[n+1][n+1];
+    for(int i=1;i<=n;i++)
+        arr[i][i]=0;
+    for(int L=1;L<n;L++)
+    {
+        for(int i=1;i<=n-L;i++)
+        {
+            int j=i+L,temp;
+            cout<<i<<" "<<j<<endl;
+            arr[i][j]=INT_MAX;
+            for(int k=i;k<j;k++)
+            {
+             temp=arr[i][k]+arr[k+1][j]+array[i-1]*array[k]*array[j];
+             if(temp<arr[i][j])
+                    arr[i][j]=temp;
+            }
+        }
+    }
+    return arr[1][n];
+}
 int main() {
     int *array,n;
     cin>>n;
     array=new int[n];
     for(int i=0;i<n;i++)
         cin>>array[i];
-    cout<<matrixChainMultiplication(array,1,n-1);
+    cout<<matrixChainMultiplicationDp(array,n-1);
     delete[] array;
 }
