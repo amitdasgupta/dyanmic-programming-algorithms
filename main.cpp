@@ -185,6 +185,25 @@ int integerKnapsackDp(Object* array,int capacity,int n)
     }
     return result[n-1][capacity];
 }
+/****************fractional knapsack problem*/////////////////
+int fractionalKnapsackDp(Object* array,int capacity,int n)
+{
+    int result[n][capacity+1];
+    for(int i=0;i<n;i++)
+        result[i][0]=0;
+    for(int i=0;i<n;i++)
+    {
+        for(int j=1;j<=capacity;j++)
+        {
+            if(array[i].weight>j)
+                result[i][j]=result[i-1][j];
+            else
+                result[i][j]=max(array[i].value+result[i-1][j-array[i].weight],result[i-1][j]);
+           // cout<<result[i][j]<<endl;
+        }
+    }
+    return result[n-1][capacity];
+}
 int main() {
     int n;
     cin>>n;
@@ -200,6 +219,6 @@ int main() {
     cout<<"enter capacity"<<endl;
     int capacity;
     cin>>capacity;
-    cout<<integerKnapsackDp(array,capacity,n-1);
+    cout<<fractionalKnapsackDp(array,capacity,n);
     delete[] array;
 }
