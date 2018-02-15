@@ -167,6 +167,24 @@ int integerKnapsack(Object* array,int capacity,int i)
             return max(array[i].value+integerKnapsack(array,capacity-array[i].weight,i),integerKnapsack(array,capacity,i-1));
     }
 }
+/************Integer knapsack problem*//////////////
+int integerKnapsackDp(Object* array,int capacity,int n)
+{
+    int result[n][capacity+1];
+    for(int i=0;i<n;i++)
+        result[i][0]=0;
+    for(int i=0;i<n;i++)
+    {
+        for(int j=1;j<=capacity;j++)
+        {
+            if(array[i].weight>j)
+                result[i][j]=result[i-1][j];
+            else
+                result[i][j]=max(array[i].value+result[i][j-array[i].weight],result[i-1][j]);
+        }
+    }
+    return result[n-1][capacity];
+}
 int main() {
     int n;
     cin>>n;
@@ -176,13 +194,12 @@ int main() {
         cin>>array[i].weight>>array[i].value;
     sort(array,array+n,[](Object a,Object b)->bool
          {
-
-           return a.weight<b.weight;
+                return a.weight<b.weight;
          }
          );
     cout<<"enter capacity"<<endl;
     int capacity;
     cin>>capacity;
-    cout<<integerKnapsack(array,capacity,n-1);
+    cout<<integerKnapsackDp(array,capacity,n-1);
     delete[] array;
 }
