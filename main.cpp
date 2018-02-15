@@ -1,5 +1,6 @@
 #include <iostream>
 #include<string>
+#include<algorithm>
 using namespace std;
 /***************Lcs
 int Lcs(string s,string p)
@@ -125,6 +126,7 @@ int matrixChainMultiplication(int *array,int start,int last)
         return res;
     }
 }
+/************code for matrix chain multiplication using dp*////////////
 int matrixChainMultiplicationDp(int *array,int n)
 {
     int arr[n+1][n+1];
@@ -147,12 +149,40 @@ int matrixChainMultiplicationDp(int *array,int n)
     }
     return arr[1][n];
 }
+/*************basic object declaration*////////////
+struct Object{
+int weight;
+int value;
+};
+/************Integer knapsack problem*//////////////
+int integerKnapsack(Object* array,int capacity,int i)
+{
+    if(capacity==0||i<0)
+        return 0;
+    else
+    {
+        if(array[i].weight>capacity)
+            return integerKnapsack(array,capacity,i-1);
+        else
+            return max(array[i].value+integerKnapsack(array,capacity-array[i].weight,i),integerKnapsack(array,capacity,i-1));
+    }
+}
 int main() {
-    int *array,n;
+    int n;
     cin>>n;
-    array=new int[n];
+    Object *array;
+    array=new Object[n];
     for(int i=0;i<n;i++)
-        cin>>array[i];
-    cout<<matrixChainMultiplicationDp(array,n-1);
+        cin>>array[i].weight>>array[i].value;
+    sort(array,array+n,[](Object a,Object b)->bool
+         {
+
+           return a.weight<b.weight;
+         }
+         );
+    cout<<"enter capacity"<<endl;
+    int capacity;
+    cin>>capacity;
+    cout<<integerKnapsack(array,capacity,n-1);
     delete[] array;
 }
