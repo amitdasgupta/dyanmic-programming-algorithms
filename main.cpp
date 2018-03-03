@@ -204,21 +204,54 @@ int fractionalKnapsackDp(Object* array,int capacity,int n)
     }
     return result[n-1][capacity];
 }
+/***********making coin change problem*//////////
+int coinChange(int *array,int start,int last,int value)
+{
+    if(start>last||value<0)
+        return 0;
+    if(value==0)
+        return 1;
+    return coinChange(array,start,last,value-array[last])+coinChange(array,start,last-1,value);
+}
+/*****coin change using dp*//////
+int coinChangeDp(int *array,int n,int total)
+{
+    int **arr=new int*[n];
+    for(int i=0;i<n;i++)
+        arr[i]=new int[total+1];
+    for(int i=0;i<n;i++)
+        arr[i][0]=0;
+    for(int j=1;j<=total;j++)
+    {
+     arr[0][j]=j;
+    }
+    for(int i=1;i<n;i++)
+        for(int j=1;j<=total;j++)
+    {
+        if(array[i]>j)
+            arr[i][j]=arr[i-1][j];
+        else
+            arr[i][j]=min(arr[i-1][j],1+arr[i][j-array[i]]);
+            cout<<arr[i][j]<<endl;
+    }
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<=total;j++)
+            cout<<arr[i][j]<< " ";
+        cout<<endl;
+    }
+    return arr[n-1][total];
+}
+
 int main() {
     int n;
     cin>>n;
-    Object *array;
-    array=new Object[n];
+    int *array=new int[n];
     for(int i=0;i<n;i++)
-        cin>>array[i].weight>>array[i].value;
-    sort(array,array+n,[](Object a,Object b)->bool
-         {
-                return a.weight<b.weight;
-         }
-         );
-    cout<<"enter capacity"<<endl;
-    int capacity;
-    cin>>capacity;
-    cout<<fractionalKnapsackDp(array,capacity,n);
+        cin>>array[i];
+    cout<<"enter the total value"<<endl;
+    int total;
+    cin>>total;
+    cout<<coinChangeDp(array,n,total);
     delete[] array;
 }
