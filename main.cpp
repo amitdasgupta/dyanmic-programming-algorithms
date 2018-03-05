@@ -242,7 +242,28 @@ int coinChangeDp(int *array,int n,int total)
     }
     return arr[n-1][total];
 }
-
+/************number of ways coin can be changed*///////
+int numberOfWays(int *array,int n,int total)
+{
+    int arr[n][total+1];
+    for(int i=0;i<n;i++)
+        arr[i][0]=1;
+    for(int i=1;i<=total;i++)
+        arr[0][i]=1;
+    for(int i=1;i<n;i++)
+     {
+            for(int j=1;j<=total;j++)
+    {
+        if(array[i]>j)
+            arr[i][j]=arr[i-1][j];
+        else
+            arr[i][j]=arr[i-1][j]+arr[i][j-array[i]];
+        cout<<arr[i][j]<<" ";
+    }
+    cout<<endl;
+     }
+    return arr[n-1][total];
+}
 int main() {
     int n;
     cin>>n;
@@ -252,6 +273,6 @@ int main() {
     cout<<"enter the total value"<<endl;
     int total;
     cin>>total;
-    cout<<coinChangeDp(array,n,total);
+    cout<<numberOfWays(array,n,total);
     delete[] array;
 }
