@@ -1,6 +1,7 @@
 #include <iostream>
 #include<string>
 #include<algorithm>
+#include<unordered_map>
 using namespace std;
 /***************Lcs
 int Lcs(string s,string p)
@@ -258,11 +259,35 @@ int numberOfWays(int *array,int n,int total)
             arr[i][j]=arr[i-1][j];
         else
             arr[i][j]=arr[i-1][j]+arr[i][j-array[i]];
-        cout<<arr[i][j]<<" ";
+       // cout<<arr[i][j]<<" ";
     }
-    cout<<endl;
+    //cout<<endl;
      }
     return arr[n-1][total];
+}
+/*******brute force code for LIS*///////
+int lisSubsequence(int *array,int n,int &last_element)
+{
+    if(n==1)
+        {
+            last_element=0;
+            return 1;
+        }
+    else
+    {
+        int m=n-1,maxi=INT_MIN;
+        for(int i=0;i<m;i++)
+        {
+            maxi=max(maxi,lisSubsequence(array,i+1,last_element));
+        }
+        if(array[m]>array[last_element])
+        {
+            last_element=m;
+            return maxi+1;
+        }
+        else
+            return maxi;
+    }
 }
 int main() {
     int n;
@@ -270,9 +295,7 @@ int main() {
     int *array=new int[n];
     for(int i=0;i<n;i++)
         cin>>array[i];
-    cout<<"enter the total value"<<endl;
-    int total;
-    cin>>total;
-    cout<<numberOfWays(array,n,total);
+    int a;
+    cout<<lisSubsequence(array,n,a);
     delete[] array;
 }
